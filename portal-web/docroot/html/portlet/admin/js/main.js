@@ -7,12 +7,12 @@ AUI.add(
 				position: 'bottom',
 				styles: {
 					background: {
-						fill: {
-							color: '#EEF0F2'
-						},
 						border: {
 							color: '#CDCDCD',
 							weight: 1
+						},
+						fill: {
+							color: '#EEF0F2'
 						}
 					},
 					gap: 20,
@@ -48,21 +48,20 @@ AUI.add(
 			type: 'pie'
 		},
 
-		CSS_LABEL = 'pieSeriesLabel',
+		BOUNDING_BOX = 'boundingBox',
+		DATA_PROVIDER = 'dataProvider',
+		SLICE_PERCENT_MIN = 15,
+		START_ANGLE = 180,
+		STR_BLANK = '',
+		STR_COMMA = ',',
+		STYLES_COLORS = 'stylesColors',
 
+		CSS_LABEL = 'pieSeriesLabel',
 		CSS_LABEL_POS_NE = 'label-NE',
 		CSS_LABEL_POS_NW = 'label-NW',
 		CSS_LABEL_POS_SE = 'label-SE',
 		CSS_LABEL_POS_SW = 'label-SW',
-
 		CSS_LABEL_WRAPPER = 'label-wrapper',
-
-		SLICE_PERCENT_MIN = 15,
-
-		START_ANGLE = 180,
-
-		STR_BLANK = '',
-		STR_COMMA = ',',
 
 		TPL_LABEL = new A.Template(
 			'<div class="{className} id="{seriesId}_label_{index}" style="left: {left}px; top: {top}px;">',
@@ -78,9 +77,6 @@ AUI.add(
 				ATTRS: {
 					dataProvider: {
 						value: []
-					},
-					renderContainer: {
-						value: ''
 					},
 					stylesColors: {
 						value: []
@@ -109,13 +105,11 @@ AUI.add(
 					_createPieChart: function() {
 						var instance = this;
 
+						var boundingBox = instance.get(BOUNDING_BOX);
+						var dataProvider = instance.get(DATA_PROVIDER);
+						var stylesColors = instance.get(STYLES_COLORS);
+
 						var config = A.clone(CONFIG);
-
-						var dataProvider = instance.get('dataProvider');
-
-						var renderContainer = instance.get('renderContainer');
-
-						var stylesColors = instance.get('stylesColors');
 
 						var instanceConfig = {
 							dataProvider: dataProvider,
@@ -132,7 +126,7 @@ AUI.add(
 
 						A.mix(config, instanceConfig, true, null, 0, true);
 
-						var chart = new A.Chart(config).render(renderContainer);
+						var chart = new A.Chart(config).render(boundingBox);
 
 						return chart;
 					},
@@ -146,40 +140,48 @@ AUI.add(
 					_drawLabels: function() {
 						var instance = this;
 
-						var pieChart = instance.chart;
-
-						var graphic = pieChart.get('graph').get('graphic');
-
-						var series = pieChart.getSeries(0);
-
-						var total = series.getTotalValues();
-
-						if (total === 0) {
-							return;
-						}
-
-						var index;
-						var item;
-						var len = series.get('markers').length;
-
-						var cos;
-						var radius = graphic.get('width') / 2;
-						var sin;
-						var startAngle = START_ANGLE;
-						var totalAngle;
-
 						var className = A.ClassNameManager.getClassName(CSS_LABEL);
+						var cos;
+						var item;
 						var label;
 						var posX;
 						var posY;
-						var seriesId = pieChart.get('id') + '_series';
+						var sin;
+						var startAngle = START_ANGLE;
+						var totalAngle;
 						var value;
 						var valuePercent;
 
-						var graphicNode = A.one(graphic.get('node'));
+						var chart = instance.chart;
 
-						for (index = len-1; index >= 0; index--) {
-							item = pieChart.getSeriesItems(series, index);
+						var chartGraph = chart.get('graph');
+						var chartId = chart.get('id');
+
+						var series = chart.getSeries(0);
+
+						var graphic = chartGraph.get('graphic');
+
+						var graphicNode = graphic.get('node');
+						var graphicWidth = graphic.get('width');
+
+						var seriesMarkers = series.get('markers');
+
+						var len = seriesMarkers.length;
+
+						var radius = graphicWidth / 2;
+
+						var seriesId = chartId + '_series';
+
+						var total = series.getTotalValues();
+
+						var graphicNode = A.one(graphicNode);
+
+						if (total == 0) {
+							return;
+						}
+
+						for (var index = len - 1; index >= 0; index--) {
+							item = chart.getSeriesItems(series, index);
 
 							value = item.value.value;
 
@@ -197,8 +199,8 @@ AUI.add(
 							startAngle = startAngle + (totalAngle / 2);
 
 							if (valuePercent > SLICE_PERCENT_MIN) {
-								sin = Math.sin(startAngle / 180 * Math.PI);
 								cos = Math.cos(startAngle / 180 * Math.PI);
+								sin = Math.sin(startAngle / 180 * Math.PI);
 
 								posX = Math.round(radius + sin * radius * 0.55);
 								posY = Math.round(radius + cos * radius * 0.55);

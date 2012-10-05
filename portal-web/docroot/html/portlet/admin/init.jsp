@@ -48,52 +48,30 @@ if (PropsValues.SHARD_SELECTOR.equals(ManualShardSelector.class.getName()) && (S
 	showShardSelector = true;
 }
 
-/******************************************/
-/* Memory Chart Data */
 Runtime runtime = Runtime.getRuntime();
 
+long memoryMax = runtime.maxMemory();
 long memoryTotal = runtime.totalMemory();
 long memoryTotalFree = runtime.freeMemory();
+
 long memoryTotalUsed = memoryTotal - memoryTotalFree;
-
-long memoryMax = runtime.maxMemory();
 long memoryMaxFree = memoryMax - memoryTotalUsed;
-long memoryMaxUsed = memoryTotalUsed;
-
-long memoryAllUsed = memoryTotalUsed;
-long memoryAllTotalFree = memoryTotalFree;
 long memoryAllMaxFree = memoryMax - memoryTotalUsed - memoryTotalFree;
 
-/******************************************/
-/* Format to MB */
+memoryAllMaxFree = convertBytesToMB(memoryAllMaxFree);
+memoryMax = convertBytesToMB(memoryMax);
+memoryMaxFree = convertBytesToMB(memoryMaxFree);
 memoryTotal = convertBytesToMB(memoryTotal);
 memoryTotalFree = convertBytesToMB(memoryTotalFree);
 memoryTotalUsed = convertBytesToMB(memoryTotalUsed);
 
-memoryMax = convertBytesToMB(memoryMax);
-memoryMaxFree = convertBytesToMB(memoryMaxFree);
-memoryMaxUsed = convertBytesToMB(memoryMaxUsed);
-
-memoryAllUsed = convertBytesToMB(memoryAllUsed);
-memoryAllTotalFree = convertBytesToMB(memoryAllTotalFree);
-memoryAllMaxFree = convertBytesToMB(memoryAllMaxFree);
-
-/******************************************/
-/* SVG Zero Value Fix */
+memoryAllMaxFree = chartZeroValueFix(memoryAllMaxFree);
+memoryMaxFree = chartZeroValueFix(memoryMaxFree);
 memoryTotalFree = chartZeroValueFix(memoryTotalFree);
 memoryTotalUsed = chartZeroValueFix(memoryTotalUsed);
-
-memoryMaxFree = chartZeroValueFix(memoryMaxFree);
-memoryMaxUsed = chartZeroValueFix(memoryMaxUsed);
-
-memoryAllUsed = chartZeroValueFix(memoryAllUsed);
-memoryAllTotalFree = chartZeroValueFix(memoryAllTotalFree);
-memoryAllMaxFree = chartZeroValueFix(memoryAllMaxFree);
 %>
 
 <%!
-/******************************************/
-/* Memory Chart Methods */
 private long convertBytesToMB(long value) {
 	long binaryPrefix = 1024;
 
