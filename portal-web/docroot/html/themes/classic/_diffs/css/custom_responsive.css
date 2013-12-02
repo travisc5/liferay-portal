@@ -88,6 +88,10 @@
 									.nav-item-icon {
 										font-size: 22px;
 										margin-top: 0;
+
+										&.controls-state-icon {
+											margin-bottom: 3px;
+										}
 									}
 
 									&.toggle-controls-link {
