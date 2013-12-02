@@ -333,6 +333,11 @@ $editLayoutPanelWidth: 460px;
 										> .nav-item-icon {
 											margin-right: 0;
 											margin-top: 3px;
+
+											&.controls-state-icon {
+												margin-top: 0;
+												margin-bottom: 2px;
+											}
 										}
 
 										.nav-item-label {
