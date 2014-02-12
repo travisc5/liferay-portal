@@ -25,6 +25,11 @@
 
 		#navigation.open .navbar-inner {
 			background: #009AE5;
+
+			.lfr-nav-sortable .delete-tab {
+				left: 100px;
+				right: auto;
+			}
 		}
 
 		.dockbar .navbar-inner .container .nav-collapse .nav-add-controls ul.dropdown-menu {
