@@ -26,6 +26,10 @@
 		border-width: 0;
 		float: left;
 		padding: 0;
+
+		@include respond-to(phone, tablet) {
+			padding: 5px;
+		}
 	}
 
 	.palette-item-inner {
@@ -77,11 +81,5 @@
 .input-prepend, .input-append {
 	.input-localized .input-localized-content {
 		margin-top: 3px;
-	}
-}
-
-@include respond-to(phone, tablet) {
-	.input-localized .palette-item {
-		padding: 5px;
 	}
 }
