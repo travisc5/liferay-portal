@@ -271,6 +271,14 @@ public class VerifyProperties extends VerifyProcess {
 		"dynamic.data.lists.template.language.parser[vm]",
 		"dynamic.data.lists.template.language.parser[xsl]",
 		"dynamic.data.mapping.template.language.types",
+		"editor.wysiwyg.portal-web.docroot.html.portlet.blogs.configuration." +
+			"jsp",
+		"editor.wysiwyg.portal-web.docroot.html.portlet.bookmarks." +
+			"configuration.jsp",
+		"editor.wysiwyg.portal-web.docroot.html.portlet.document_library." +
+			"configuration.jsp",
+		"editor.wysiwyg.portal-web.docroot.html.portlet.login.configuration." +
+			"jsp",
 		"ehcache.statistics.enabled", "index.filter.search.limit",
 		"javax.persistence.validation.mode", "jbi.workflow.url",
 		"journal.template.language.parser[css]",

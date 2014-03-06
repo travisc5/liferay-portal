@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_TRANSLATION_IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'_15_toLanguageId=')]</td>
+	<td>//iframe[contains(@src,'_15_toLanguageId')]</td>
 	<td></td>
 </tr>
 <tr>

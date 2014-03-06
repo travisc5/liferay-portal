@@ -6,7 +6,11 @@
 
 		<execute selenium="type" argument2="" />
 
+		<execute selenium="pause" argument1="1000" />
+
 		<execute selenium="clickAt" />
+
+		<execute selenium="pause" argument1="1000" />
 
 		<execute selenium="sendKeys" />
 	</command>
@@ -43,6 +47,14 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="type" />
+	</command>
+
+	<command name="typeAceEditor">
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="typeAceEditor" />
 	</command>
 
 	<command name="typeFrame">

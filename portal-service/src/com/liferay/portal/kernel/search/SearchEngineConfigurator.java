@@ -12,28 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.LifecycleAction;
-import com.liferay.portal.kernel.events.LifecycleEvent;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Michael Young
  */
-public interface EventsProcessor {
+public interface SearchEngineConfigurator {
 
-	public void process(
-			String key, String[] classes, LifecycleEvent lifecycleEvent)
-		throws ActionException;
+	public void afterPropertiesSet();
 
-	public void processEvent(
-			LifecycleAction lifecycleAction, LifecycleEvent lifecycleEvent)
-		throws ActionException;
+	public void destroy();
 
-	public void registerEvent(String key, Object event);
-
-	public void unregisterEvent(String key, Object event);
+	public void setSearchEngines(Map<String, SearchEngine> searchEngines);
 
 }

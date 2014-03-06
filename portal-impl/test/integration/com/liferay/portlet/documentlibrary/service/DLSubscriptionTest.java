@@ -24,7 +24,6 @@ import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.BaseSubscriptionTestCase;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import org.junit.Ignore;
@@ -68,7 +67,7 @@ public class DLSubscriptionTest extends BaseSubscriptionTestCase {
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			group.getGroupId(), containerModelId,
 			ServiceTestUtil.randomString());
 
 		return folder.getFolderId();

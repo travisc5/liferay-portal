@@ -1293,6 +1293,8 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE = "layout.remember.maximized.window.state";
 
+	public static final String LAYOUT_RESET_PORTLET_IDS = "layout.reset.portlet.ids";
+
 	public static final String LAYOUT_SET_FORM_UPDATE = "layout.set.form.update";
 
 	public static final String LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD = "layout.set.prototype.merge.fail.threshold";
@@ -2682,6 +2684,8 @@ public interface PropsKeys {
 	public static final String WIKI_PAGE_TITLES_REGEXP = "wiki.page.titles.regexp";
 
 	public static final String WIKI_PAGE_TITLES_REMOVE_REGEXP = "wiki.page.titles.remove.regexp";
+
+	public static final String WIKI_PARSERS_CREOLE_SUPPORTED_PROTOCOLS = "wiki.parsers.creole.supported.protocols";
 
 	public static final String WIKI_RSS_ABSTRACT_LENGTH = "wiki.rss.abstract.length";
 
