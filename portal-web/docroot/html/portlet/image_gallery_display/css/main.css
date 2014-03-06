@@ -85,10 +85,18 @@
 	.image-title {
 		clear: both;
 		display: block;
-		max-width: 250px;
-		overflow: hidden;
-		padding: 0 10px;
+
 		@include ellipsis;
+
+		padding: 0 6px;
+	}
+}
+
+.image-gallery {
+	.image-viewer-caption {
+		@include ellipsis;
+
+		max-width: 300px;
 	}
 }
 
