@@ -20,7 +20,7 @@
 	<liferay-ui:message key="<%= label %>" />
 
 	<c:if test='<%= required && showRequiredLabel && !type.equals("radio") %>'>
-		<span class="label-required">(<liferay-ui:message key="required" />)</span>
+		<span class="label-required"><liferay-ui:message key="required" /></span>
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(helpMessage) %>">
@@ -28,7 +28,7 @@
 	</c:if>
 
 	<c:if test="<%= changesContext %>">
-		<span class="hide-accessible"><liferay-ui:message key="changing-the-value-of-this-field-will-reload-the-page" />)</span>
+		<span class="hide-accessible"><liferay-ui:message key="changing-the-value-of-this-field-will-reload-the-page" /></span>
 	</c:if>
 </liferay-util:buffer>
 
