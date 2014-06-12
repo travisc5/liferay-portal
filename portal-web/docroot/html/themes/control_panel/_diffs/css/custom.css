@@ -392,7 +392,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 							&.control-panel-apps, &.control-panel-configuration, &.control-panel-sites, &.control-panel-users {
 								[class^="icon-"], [class*=" icon-"] {
 									&:before {
-										content: '';
+										content: "";
 									}
 								}
 							}
@@ -870,7 +870,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Control panel general ---------- */
 
 	li.publish-link-container a:before {
-		content: '';
+		content: "";
 		padding-left: 19px;
 	}
 
@@ -959,7 +959,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 			@include background-image(linear-gradient(#FFF, #D1D1D1));
 
-			content: '';
+			content: "";
 			display: block;
 			height: 15px;
 			position: absolute;
@@ -1109,7 +1109,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				&:before {
 					clear: both;
-					content: '';
+					content: "";
 					display: block;
 					height: 0;
 					visibility: hidden;

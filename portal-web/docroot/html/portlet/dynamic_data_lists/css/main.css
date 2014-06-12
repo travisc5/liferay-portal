@@ -7,7 +7,7 @@
 		overflow: auto;
 
 		&.yui3-datatable td:after {
-			content: '\0000a0';
+			content: "\0000a0";
 		}
 	}
 

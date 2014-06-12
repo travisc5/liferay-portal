@@ -538,7 +538,7 @@
 
 						&.current-parent:before {
 							color: #999;
-							content: ' ... / ';
+							content: " ... / ";
 							font-weight: bold;
 						}
 					}
@@ -702,7 +702,7 @@
 				position: relative;
 
 				.accordion-toggle:after {
-					content: '';
+					content: "";
 					margin-left: 10px;
 					position: absolute;
 					top: 50%;

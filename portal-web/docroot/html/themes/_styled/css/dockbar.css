@@ -543,7 +543,7 @@ $editLayoutPanelWidth: 460px;
 				&:after {
 					border: $diamondSize solid transparent;
 					border-top-color: #1485EB;
-					content: '';
+					content: "";
 					height: 0;
 					left: -$diamondSize;
 					position: absolute;

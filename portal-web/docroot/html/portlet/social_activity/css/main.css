@@ -41,7 +41,7 @@
 	.social-activity-item.selected:after {
 		border: 14px solid #83BFFA;
 		border-color: transparent transparent transparent #83BFFA;
-		content: '';
+		content: "";
 		display: block;
 		left: 100%;
 		margin-top: -14px;

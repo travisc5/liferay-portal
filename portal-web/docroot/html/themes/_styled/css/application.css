@@ -627,7 +627,7 @@ body.html-editor {
 
 		&:after {
 			background: url(../images/message_boards/quoteright.png) no-repeat 50%;
-			content: '';
+			content: "";
 			display: block;
 			float: right;
 			height: 24px;
@@ -662,7 +662,7 @@ body.html-editor {
 
 	&:after {
 		background: $edit-color url(../images/common/edit_white.png) no-repeat 50%;
-		content: '';
+		content: "";
 		display: block;
 		height: 20px;
 		position: absolute;
