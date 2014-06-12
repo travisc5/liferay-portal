@@ -139,7 +139,7 @@
 										<liferay-ui:icon src='<%= themeDisplay.getPathContext() + "/html/icons/default.png" %>' />
 									</c:when>
 									<c:otherwise>
-										<liferay-ui:icon message="" src='<%= portlet.getIcon() %>' />
+										<liferay-portlet:icon-portlet portlet="<%= portlet %>" />
 									</c:otherwise>
 								</c:choose>
 
