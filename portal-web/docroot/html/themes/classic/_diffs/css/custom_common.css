@@ -571,6 +571,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 				a {
 					color: #676767;
 				}
+
+				span.divider {
+					display: none;
+				}
 			}
 		}
 
