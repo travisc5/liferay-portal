@@ -81,7 +81,7 @@ AUI.add(
 							textAreaNode.autosize._uiAutoSize();
 						}
 
-						if (instance.get('displayStyle') === 'singleline' && instance.get('ddmDataProviderInstanceId') && !instance.get('builder') && !instance.get('readOnly')) {
+						if (instance.get('displayStyle') === 'singleline' && instance._hasDataProvider() && !instance.get('builder') && !instance.get('readOnly')) {
 							instance._getDataSourceData(
 								function(options) {
 									instance.set('dataSourceOptions', options);
@@ -98,7 +98,7 @@ AUI.add(
 
 						var json = TextField.superclass.toJSON.apply(instance, arguments);
 
-						if (!instance.get('ddmDataProviderInstanceId')) {
+						if (!instance._hasDataProvider()) {
 							return json;
 						}
 
@@ -149,6 +149,12 @@ AUI.add(
 								}
 							}
 						);
+					},
+
+					_hasDataProvider: function() {
+						var instance = this;
+						
+						return instance.get('ddmDataProviderInstanceId') > 0;
 					},
 
 					_instantiateAutoComplete: function(options) {
