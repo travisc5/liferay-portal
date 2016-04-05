@@ -337,16 +337,19 @@ public class DDMFormEvaluatorHelper {
 			return true;
 		}
 
-		long ddmDataProviderInstanceId = GetterUtil.getLong(
-			ddmFormField.getProperty("ddmDataProviderInstanceId"));
+		boolean useDataProvider = GetterUtil.getBoolean(
+			ddmFormField.getProperty("useDataProvider"));
 
-		if (ddmDataProviderInstanceId == 0) {
+		if (!useDataProvider) {
 			return true;
 		}
 
 		if (isDDMFormFieldValueEmpty(ddmFormFieldValue)) {
 			return false;
 		}
+
+		long ddmDataProviderInstanceId = GetterUtil.getLong(
+			ddmFormField.getProperty("ddmDataProviderInstanceId"));
 
 		List<KeyValuePair> dataProviderData = executeDataProvider(
 			ddmDataProviderInstanceId);

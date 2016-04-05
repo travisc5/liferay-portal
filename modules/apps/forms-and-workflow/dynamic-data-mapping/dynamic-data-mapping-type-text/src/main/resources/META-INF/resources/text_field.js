@@ -44,6 +44,10 @@ AUI.add(
 
 					type: {
 						value: 'text'
+					},
+
+					useDataProvider: {
+						value: false
 					}
 				},
 
@@ -99,10 +103,11 @@ AUI.add(
 						var json = TextField.superclass.toJSON.apply(instance, arguments);
 
 						if (!instance._hasDataProvider()) {
-							return json;
+							json.value[instance.get('locale')] = '';
 						}
-
-						json.value[instance.get('locale')] = instance.get('dataProviderSelectedValue');
+						else {
+							json.value[instance.get('locale')] = instance.get('dataProviderSelectedValue');
+						}
 
 						return json;
 					},
@@ -154,7 +159,7 @@ AUI.add(
 					_hasDataProvider: function() {
 						var instance = this;
 
-						return instance.get('ddmDataProviderInstanceId') > 0;
+						return instance.get('useDataProvider');
 					},
 
 					_instantiateAutoComplete: function(options) {
