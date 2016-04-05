@@ -153,7 +153,7 @@ AUI.add(
 
 					_hasDataProvider: function() {
 						var instance = this;
-						
+
 						return instance.get('ddmDataProviderInstanceId') > 0;
 					},
 
