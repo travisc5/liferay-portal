@@ -1124,15 +1124,38 @@ public class FileSystemImporter extends BaseImporter {
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
-			String value = portletPreferencesJSONObject.getString(key);
+			if (rootPortletId.equals(_RSS_FEED_PORTLET_ID) &&
+				(key.equals("urls") || key.equals("titles"))) {
 
-			if (rootPortletId.equals(_JOURNAL_CONTENT_PORTLET_ID) &&
-				key.equals("articleId")) {
+				ArrayList<String> valueArrayList = new ArrayList<String>();
 
-				value = getJournalId(value);
+				JSONObject valueJSONObject = portletPreferencesJSONObject.getJSONObject(key);
+
+				Iterator<String> valueJSONObjectIterator = valueJSONObject.keys();
+
+				while (valueJSONObjectIterator.hasNext()) {
+					String valueKey = valueJSONObjectIterator.next();
+
+					valueArrayList.add(valueJSONObject.getString(valueKey));
+				}
+
+				String[] valueArray = new String[valueArrayList.size()];
+
+				String [] values = valueArrayList.toArray(valueArray);
+
+				portletSetup.setValues(key, values);
 			}
+			else {
+				String value = portletPreferencesJSONObject.getString(key);
 
-			portletSetup.setValue(key, value);
+				if (rootPortletId.equals(_JOURNAL_CONTENT_PORTLET_ID) &&
+					key.equals("articleId")) {
+
+					value = getJournalId(value);
+				}
+
+				portletSetup.setValue(key, value);
+			}
 		}
 
 		portletSetup.store();
@@ -1953,6 +1976,9 @@ public class FileSystemImporter extends BaseImporter {
 
 	private static final String _JOURNAL_ARTICLES_DIR_NAME =
 		"/journal/articles/";
+
+	private static final String _RSS_FEED_PORTLET_ID =
+		"com_liferay_rss_web_portlet_RSSPortlet";
 
 	private static final String _JOURNAL_CONTENT_PORTLET_ID =
 		"com_liferay_journal_content_web_portlet_JournalContentPortlet";
