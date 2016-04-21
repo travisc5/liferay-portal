@@ -227,11 +227,11 @@ public class FileSystemImporter extends BaseImporter {
 		for (Object[] applicationDisplayTemplateType :
 				_APPLICATION_DISPLAY_TEMPLATE_TYPES) {
 
-			Class<?> clazz = (Class<?>)applicationDisplayTemplateType[1];
+			String className = (String)applicationDisplayTemplateType[1];
 
 			addApplicationDisplayTemplate(
 				dirName, (String)applicationDisplayTemplateType[0],
-				PortalUtil.getClassNameId(clazz));
+				PortalUtil.getClassNameId(className));
 		}
 	}
 
@@ -1124,15 +1124,38 @@ public class FileSystemImporter extends BaseImporter {
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
-			String value = portletPreferencesJSONObject.getString(key);
+			if (rootPortletId.equals(_RSS_FEED_PORTLET_ID) &&
+				(key.equals("urls") || key.equals("titles"))) {
 
-			if (rootPortletId.equals(_JOURNAL_CONTENT_PORTLET_ID) &&
-				key.equals("articleId")) {
+				ArrayList<String> valueArrayList = new ArrayList<String>();
 
-				value = getJournalId(value);
+				JSONObject valueJSONObject = portletPreferencesJSONObject.getJSONObject(key);
+
+				Iterator<String> valueJSONObjectIterator = valueJSONObject.keys();
+
+				while (valueJSONObjectIterator.hasNext()) {
+					String valueKey = valueJSONObjectIterator.next();
+
+					valueArrayList.add(valueJSONObject.getString(valueKey));
+				}
+
+				String[] valueArray = new String[valueArrayList.size()];
+
+				String [] values = valueArrayList.toArray(valueArray);
+
+				portletSetup.setValues(key, values);
 			}
+			else {
+				String value = portletPreferencesJSONObject.getString(key);
 
-			portletSetup.setValue(key, value);
+				if (rootPortletId.equals(_JOURNAL_CONTENT_PORTLET_ID) &&
+					key.equals("articleId")) {
+
+					value = getJournalId(value);
+				}
+
+				portletSetup.setValue(key, value);
+			}
 		}
 
 		portletSetup.store();
@@ -1922,12 +1945,21 @@ public class FileSystemImporter extends BaseImporter {
 
 	private static final Object[][] _APPLICATION_DISPLAY_TEMPLATE_TYPES =
 		new Object[][] {
-			{"asset_category", AssetCategory.class},
-			{"asset_entry", AssetEntry.class}, {"asset_tag", AssetTag.class},
-			{"blogs_entry", BlogsEntry.class},
-			{"document_library", FileEntry.class},
-			{"site_map", LayoutSet.class},
-			{"wiki_page", WikiPage.class}
+			{"asset_category", "com.liferay.asset.kernel.model.AssetCategory"},
+			{"asset_entry", "com.liferay.asset.kernel.model.AssetEntry"},
+			{"asset_tag", "com.liferay.asset.kernel.model.AssetTag"},
+			{"blogs_entry", "com.liferay.blogs.kernel.model.BlogsEntry"},
+			{"bread_crumb",
+				"com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"},
+			{"document_library",
+				"com.liferay.portal.kernel.repository.model.FileEntry"},
+			{"language_entry",
+				"com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"},
+			{"rss_feed", "com.liferay.rss.web.util.RSSFeed"},
+			{"site_map", "com.liferay.portal.kernel.model.LayoutSet"},
+			{"site_navigation",
+				"com.liferay.portal.kernel.theme.NavItem"},
+			{"wiki_page", "com.liferay.wiki.model.WikiPage"}
 		};
 
 	private static final String _DDL_STRUCTURE_DIR_NAME =
@@ -1955,6 +1987,9 @@ public class FileSystemImporter extends BaseImporter {
 		"/journal/templates/";
 
 	private static final String _LAYOUT_PROTOTYPE_DIR_NAME = "/templates/page";
+
+	private static final String _RSS_FEED_PORTLET_ID =
+		"com_liferay_rss_web_portlet_RSSPortlet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileSystemImporter.class);
