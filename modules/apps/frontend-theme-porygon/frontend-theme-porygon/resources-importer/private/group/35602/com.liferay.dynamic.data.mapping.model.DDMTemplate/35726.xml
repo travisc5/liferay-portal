@@ -41,13 +41,10 @@
 
 	&lt;div class=&quot;col-no-padding&quot;&gt;
 		&lt;#list entries as curEntry&gt;
-			&lt;#assign assetRenderer = curEntry.getAssetRenderer() /&gt;
-
-			&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry) /&gt;
-
-			&lt;#if assetLinkBehavior != &quot;showFullContent&quot;&gt;
-				&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true) /&gt;
-			&lt;/#if&gt;
+			&lt;#assign
+				assetRenderer = curEntry.getAssetRenderer()
+				viewURL = (assetLinkBehavior != &quot;showFullContent&quot;)?then(assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true), assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry))
+			/&gt;
 
 			${request.setAttribute(&quot;viewURL&quot;, viewURL )}
 			${request.setAttribute(&quot;author&quot;, portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName()) )}
@@ -55,16 +52,16 @@
 			&lt;@liferay_ui[&quot;asset-display&quot;]
 				assetEntry=curEntry
 				template=&quot;full_content&quot;
-				/&gt;
+			/&gt;
 		&lt;/#list&gt;
 	&lt;/div&gt;
+
 	&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
 
 	${request.setAttribute(&quot;aspectRatio&quot;, &quot;&quot;)}
 	${request.setAttribute(&quot;author&quot;, &quot;&quot; )}
 	${request.setAttribute(&quot;displayMode&quot;, 0)}
 	${request.setAttribute(&quot;viewURL&quot;, &quot;&quot; )}
-
 &lt;/#if&gt;</__script>
   <__cacheable>false</__cacheable>
   <__smallImage>false</__smallImage>
