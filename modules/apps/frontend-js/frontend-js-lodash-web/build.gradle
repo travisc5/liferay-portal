@@ -22,7 +22,7 @@ buildLodash {
 	}
 
 	from npmInstall.nodeModulesDir
-	include "lodash/lodash.js"
+	include "lodash/lodash.min.js"
 	includeEmptyDirs = false
 	into lodashDestinationDir
 }

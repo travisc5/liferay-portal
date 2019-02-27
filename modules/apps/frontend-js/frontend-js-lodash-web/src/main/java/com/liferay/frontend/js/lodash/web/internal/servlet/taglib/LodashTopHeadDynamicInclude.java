@@ -88,7 +88,7 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final String[] _FILE_NAMES = {
-		"lodash/lodash.js", "lodash/util.js"
+		"lodash/lodash.min.js", "lodash/util.js"
 	};
 
 	@Reference
