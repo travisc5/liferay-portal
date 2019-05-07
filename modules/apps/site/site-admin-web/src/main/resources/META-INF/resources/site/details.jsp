@@ -213,6 +213,7 @@ else {
 					{
 						dialog: {
 							constrain: true,
+							destroyOnHide: true,
 							modal: true
 						},
 						id: '<portlet:namespace />selectGroup',
