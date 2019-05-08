@@ -92,6 +92,60 @@
 			}
 		).render();
 
+		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
+			var loadedInFrame = window !== Liferay.Util.getOpener();
+			var searchContainerContentBox = searchContainer.get('contentBox');
+
+			if (A.UA.ie) {
+				var scrollingContainer = window;
+
+				if (loadedInFrame) {
+					scrollingContainer = searchContainerContentBox.ancestor('#main-content');
+				}
+
+				var stickyClass = 'lfr-search-container-fixed-header';
+
+				var stickyElement = searchContainerContentBox.one('thead')._node;
+
+				var elementPosition = stickyElement.getBoundingClientRect();
+
+				// Create a placeholder so that the DOM flow isn't affected with the element position changes to "fixed"
+
+					var placeholder = document.createElement('thead');
+					placeholder.style.width = elementPosition.width + 'px';
+					placeholder.style.height = elementPosition.height + 'px';
+					var placeHolderAdded = false;
+
+				scrollingContainer.addEventListener(
+					'scroll',
+					function fixedHeaderScrollEvent() {
+						console.log(scrollingContainer.scrollTop);
+						if (scrollingContainer.scrollTop >= elementPosition.top && !placeHolderAdded) {
+							stickyElement.classList.add(stickyClass);
+							stickyElement.parentNode.insertBefore(placeholder, stickyElement);
+
+							placeHolderAdded = true;
+						} else if (scrollingContainer.scrollTop < elementPosition.top && placeHolderAdded) {
+							stickyElement.classList.remove(stickyClass);
+							stickyElement.parentNode.removeChild(placeholder);
+
+							placeHolderAdded = false;
+						}
+
+						function removeFixedHeaderScrollEventListener() {
+							scrollingContainer.removeEventListener('scroll', fixedHeaderScrollEvent);
+						}
+
+						Liferay.on('destroyPortlet', removeFixedHeaderScrollEventListener);
+					}
+				);
+			} else {
+				if (loadedInFrame) {
+					searchContainerContentBox.ancestor('#main-content').addClass('lfr-search-container-fixed-header-container');
+				}
+			}
+		</c:if>
+
 		searchContainer.updateDataStore(<%= primaryKeysJSONArray.toString() %>);
 
 		var destroySearchContainer = function(event) {
