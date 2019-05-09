@@ -190,19 +190,19 @@
 	}
 
 	.portlet-configuration-edit-permissions {
+		height: calc(100vh - 60px);
+
 		.portlet-configuration-body-content {
 			display: flex;
 			flex-direction: column;
+			height: 100%;
 			overflow: visible;
 
 			> form {
 				flex-grow: 1;
+				height: 100%;
 				max-width: none;
 				overflow: auto;
-			}
-
-			.table-responsive, .table-responsive-lg {
-				overflow: visible;
 			}
 		}
 	}

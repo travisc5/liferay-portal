@@ -69,6 +69,27 @@
 			}
 		}
 	}
+
+	&.lfr-search-container-fixed-header-container {
+		height: 100%;
+
+		.searchcontainer,
+		.searchcontainer-content {
+			height: 100%;
+		}
+
+		.table-responsive {
+			height: calc(100% - 62px);
+			overflow-y: scroll;
+		}
+
+		thead th {
+			position: sticky;
+			top: 0;
+			z-index: 100;
+		}
+
+	}
 }
 
 .lfr-asset-type-column, .lfr-author-column, .lfr-city-column, .lfr-country-column, .lfr-email-address-column, .lfr-job-title-column, .lfr-region-column, .lfr-removed-by-column, .lfr-replier-column, .lfr-scope-column, .lfr-screen-name-column, .lfr-type-column, .lfr-user-column, .lfr-users-column {
