@@ -83,12 +83,18 @@
 			overflow-y: scroll;
 		}
 
-		thead th {
-			position: sticky;
-			top: 0;
-			z-index: 100;
+		.ie & table {
+			position: relative;
 		}
 
+		thead {
+			th {
+				position: -webkit-sticky;
+				position: sticky;
+				top: 0;
+				z-index: 100;
+			}
+		}
 	}
 }
 

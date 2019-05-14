@@ -95,53 +95,68 @@
 		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
 			var searchContainerContentBox = searchContainer.get('contentBox');
 
+			searchContainerContentBox.ancestor('.lfr-search-container-wrapper').addClass('lfr-search-container-fixed-header-container');
+
 			if (A.UA.ie) {
 				var scrollingContainer = window;
 
 				var loadedInFrame = scrollingContainer !== Liferay.Util.getOpener();
 
 				if (loadedInFrame) {
-					scrollingContainer = searchContainerContentBox.ancestor('#main-content');
+					scrollingContainer = searchContainerContentBox.one('.table-responsive')._node;
 				}
 
-				var stickyClass = 'lfr-search-container-fixed-header';
+				var theadNode = searchContainerContentBox.one('thead')._node;
 
-				var stickyElement = searchContainerContentBox.one('thead')._node;
+				var clonedThead = theadNode.cloneNode(true);
 
-				var elementPosition = stickyElement.getBoundingClientRect();
+				clonedThead.classList.add('hide');
+				clonedThead.style.boxShadow = window.getComputedStyle(theadNode.querySelector('th')).boxShadow;
+				clonedThead.style.position = 'absolute';
+				clonedThead.style.zIndex = '100';
 
-				// Create a placeholder so that the DOM flow isn't affected with the element position changes to "fixed"
+				var setPlaceholderStyle = function() {
+					clonedThead.style.width = searchContainerContentBox.one('tbody')._node.clientWidth + 'px';
 
-					var placeholder = document.createElement('thead');
-					placeholder.style.width = elementPosition.width + 'px';
-					placeholder.style.height = elementPosition.height + 'px';
-					var placeHolderAdded = false;
+					function removeResizeEventListener() {
+						window.removeEventListener('resize', setPlaceholderStyle);
+					}
+
+					Liferay.on('destroyPortlet', removeResizeEventListener);
+				};
+
+				setPlaceholderStyle();
+
+				window.addEventListener(
+					'resize',
+					setPlaceholderStyle
+				);
+
+				theadNode.parentNode.insertBefore(clonedThead, theadNode);
+
+				var elementPosition = theadNode.getBoundingClientRect();
+
+				var fixedHeaderScrollEvent = function(event) {
+					clonedThead.style.transform = 'translateY(' + Math.ceil(scrollingContainer.scrollTop - elementPosition.height) + 'px)';
+
+					if (clonedThead.classList.contains('hide') && (scrollingContainer.scrollTop >= elementPosition.height)) {
+						clonedThead.classList.remove('hide');
+					}
+					else if (scrollingContainer.scrollTop < elementPosition.height) {
+						clonedThead.classList.add('hide');
+					}
+
+					function removeFixedHeaderScrollEventListener() {
+						scrollingContainer.removeEventListener('scroll', fixedHeaderScrollEvent);
+					}
+
+					Liferay.on('destroyPortlet', removeFixedHeaderScrollEventListener);
+				};
 
 				scrollingContainer.addEventListener(
 					'scroll',
-					function fixedHeaderScrollEvent() {
-						console.log(scrollingContainer.scrollTop);
-						if (scrollingContainer.scrollTop >= elementPosition.top && !placeHolderAdded) {
-							stickyElement.classList.add(stickyClass);
-							stickyElement.parentNode.insertBefore(placeholder, stickyElement);
-
-							placeHolderAdded = true;
-						} else if (scrollingContainer.scrollTop < elementPosition.top && placeHolderAdded) {
-							stickyElement.classList.remove(stickyClass);
-							stickyElement.parentNode.removeChild(placeholder);
-
-							placeHolderAdded = false;
-						}
-
-						function removeFixedHeaderScrollEventListener() {
-							scrollingContainer.removeEventListener('scroll', fixedHeaderScrollEvent);
-						}
-
-						Liferay.on('destroyPortlet', removeFixedHeaderScrollEventListener);
-					}
+					fixedHeaderScrollEvent
 				);
-			} else {
-				searchContainerContentBox.ancestor('.lfr-search-container-wrapper').addClass('lfr-search-container-fixed-header-container');
 			}
 		</c:if>
 
