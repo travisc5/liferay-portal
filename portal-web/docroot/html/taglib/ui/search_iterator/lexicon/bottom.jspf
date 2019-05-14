@@ -93,11 +93,9 @@
 		).render();
 
 		<c:if test="<%= fixedHeader && displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) %>">
-			var searchContainerContentBox = searchContainer.get('contentBox');
-
-			searchContainerContentBox.ancestor('.lfr-search-container-wrapper').addClass('lfr-search-container-fixed-header-container');
-
 			if (A.UA.ie) {
+				var searchContainerContentBox = searchContainer.get('contentBox');
+
 				var scrollingContainer = window;
 
 				var loadedInFrame = scrollingContainer !== Liferay.Util.getOpener();
