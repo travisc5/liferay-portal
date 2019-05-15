@@ -115,12 +115,6 @@
 
 				var setPlaceholderStyle = function() {
 					clonedThead.style.width = searchContainerContentBox.one('tbody')._node.clientWidth + 'px';
-
-					function removeResizeEventListener() {
-						window.removeEventListener('resize', setPlaceholderStyle);
-					}
-
-					Liferay.on('destroyPortlet', removeResizeEventListener);
 				};
 
 				setPlaceholderStyle();
@@ -143,17 +137,19 @@
 					else if (scrollingContainer.scrollTop < elementPosition.height) {
 						clonedThead.classList.add('hide');
 					}
-
-					function removeFixedHeaderScrollEventListener() {
-						scrollingContainer.removeEventListener('scroll', fixedHeaderScrollEvent);
-					}
-
-					Liferay.on('destroyPortlet', removeFixedHeaderScrollEventListener);
 				};
 
 				scrollingContainer.addEventListener(
 					'scroll',
 					fixedHeaderScrollEvent
+				);
+
+				Liferay.on(
+					'destroyPortlet',
+					function() {
+						scrollingContainer.removeEventListener('scroll', fixedHeaderScrollEvent);
+						window.removeEventListener('resize', setPlaceholderStyle);
+					}
 				);
 			}
 		</c:if>
